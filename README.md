@@ -40,14 +40,24 @@ I used **PostgreSQL** for the analysis and **Power BI** for the dashboard.
 ## Project Structure
 
 ```
-├── data/          logistics_orders.csv
-├── sql/           01_create_table.sql
-│                  02_data_checks.sql
-│                  03_kpi_queries.sql
-│                  04_business_questions.sql
-├── dashboard/     logistics_dashboard.pbix
-├── docs/          business_questions.docx, sql_queries.docx
-└── screenshots/   dashboard and SQL result images
+logistics-analytics-postgresql-powerbi/
+├── dashboard/
+│   └── logistics_dashboard.pbix
+├── data/
+│   └── logistics_orders.csv
+├── docs/
+│   ├── business_questions.docx
+│   └── sql_queries.docx
+├── screenshots/
+│   ├── dashboard_overview.png
+│   ├── sql_query_results_1.png
+│   └── sql_query_results_2.png
+│   └── sql_query_results_3.png
+├── sql/
+│   ├── 01_create_table.sql
+│   ├── 02_kpi_queries.sql
+│   └── 03_business_questions.sql
+└── README.md
 ```
 
 ## Data Notes
