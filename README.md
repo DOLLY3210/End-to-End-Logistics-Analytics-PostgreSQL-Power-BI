@@ -2,7 +2,7 @@ End-to-End Logistics Analytics (PostgreSQL + Power BI)
 I analyzed 100,000 shipping orders to answer three simple questions: How much do we sell? How fast do we deliver? How many orders arrive late?
 I used PostgreSQL for the analysis and Power BI for the dashboard.
 Dashboard
-![Logistics Dashboard](image/dashboard_overview.png)
+![Logistics Dashboard](screenshots/dashboard_overview.png)
 Key Results
 KPI	Value
 Total Sales	€ 10,105,352.82
