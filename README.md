@@ -1,82 +1,48 @@
-# Global Logistics Analytics 
-
-## Business Context & Core Objective
-This repository contains a full-stack data analytics solution designed to audit global logistics throughput, 
-evaluate carrier performance, and isolate critical Supply Chain service level agreement (SLA) bottlenecks. 
-By pairing relational database auditing with interactive business intelligence reporting, 
-this project translates raw order grids into actionable business strategies.
-
----
-
-## Technology & Architecture Stack
- Database Engine: PostgreSQL (Relational Data Modeling & Structured Queries)
- Business Intelligence Platform: Microsoft Power BI Desktop (Interactive UX Design)
- Version Control: Git & GitHub
-
----
-
-## Strategic KPIs & Data Integrity Verification
-To ensure absolute data modeling integrity, every high-level dashboard visual is verified against backend relational database calculations.
-
-| KPI Dimension | Power BI Dashboard Value | Verified PostgreSQL Relational Output | Data Integrity Status |
-
-| **Global Throughput Volume** | 100.000 Total Orders | `100000` | 🟢 100% Aligned 
-| **Gross Commercial Yield** | € 10.105.352,82 Total Sales | `10105352.82` | 🟢 100% Aligned |
-| **Total Logistic Expense** | € 1.247.008,58 Shipping Cost | `1247008.58` | 🟢 100% Aligned |
-| **Carrier Freight Lead Time** | 5.70 Average Days | `5.70` | 🟢 100% Aligned |
-| **Logistics SLA Compliance** | 69.92% On-Time Delivery | `69.92%` (Actual Delivery <= 7 Days) | 🟢 100% Aligned |
-
----
-
-##  Advanced SQL Query Warehouse
-```sql
--- ====================================================================
--- GLOBAL SUPPLY CHAIN OPERATIONS 
--- Purpose: Extract Executive-Level Logistics KPIs for SLA Optimization
--- ====================================================================
-
--- KPI 01: Audit Overall Dataset Operational Throughput Volume
-SELECT COUNT(order_id) AS total_order 
-FROM logistics;
-
--- KPI 02: Calculate Total Commercial Revenue Value Passed Through Grid
-SELECT SUM(sales) AS total_sales 
-FROM logistics;
-
--- KPI 03: Verify Global Shipping Cost KPI
-SELECT SUM(shipping_cost) AS total_shipping_cost 
-FROM logistics;
-
--- KPI 04: Evaluate Average Carrier Freight Lead Time (Days)
-SELECT ROUND(AVG(Delivery_Date - Order_Date), 2) AS average_delivery_time_in_days 
-FROM logistics;
-
--- KPI 05: Assess Premium Logistics Service Level Agreement (SLA) Matrix
-SELECT 
-    COUNT(Order_ID) AS total_orders,
-    ROUND(COUNT(*) FILTER (WHERE Actual_Delivery_Days <= 7) * 100.0 / COUNT(*), 2) AS on_time_orders 
-FROM logistics;
-
--- KPI 06: Aggregate Regional Distribution Volume (Throughput Rank)
-SELECT 
-    region, 
-    COUNT(order_id) AS total_order 
-FROM logistics
-GROUP BY region
-ORDER BY total_order DESC;
-
--- KPI 07: Measure Regional Gross Sales Financial Yield 
-SELECT 
-    region, 
-    SUM(sales) AS total_sales 
-FROM logistics
-GROUP BY region
-ORDER BY total_sales DESC;
+End-to-End Logistics Analytics (PostgreSQL + Power BI)
+I analyzed 100,000 shipping orders to answer three simple questions: How much do we sell? How fast do we deliver? How many orders arrive late?
+I used PostgreSQL for the analysis and Power BI for the dashboard.
+Dashboard
+![Logistics Dashboard](image/dashboard_overview.png)
+Key Results
+KPI	Value
+Total Sales	€ 10,105,352.82
+Total Orders	100,000
+Total Shipping Cost	€ 1,247,008.58
+Average Delivery Time	5.70 days
+On-Time Delivery (within 7 days)	69.92%
+What I Found
+30% of orders arrive late. 30,084 of 100,000 orders took more than 7 days.
+Lateness is the same in every region (29.7% to 30.3%). It is a company-wide problem, not a regional one.
+Sales are balanced. Each region brings in about 25% of revenue.
+Shipping is expensive. It costs about 12% of sales (€ 1.25M). Same-Day orders cost the most (about € 53 per order).
+Express and Same-Day orders are never late.
+Business Questions
+What is the total sales revenue?
+How many total orders were placed?
+How many orders does each region generate?
+How much does each region contribute to sales?
+What is the total shipping cost?
+What is the average delivery time in days?
+What percentage of orders are delivered on time (7-day limit)?
+Which regions have the worst delivery delays?
+Project Structure
 ```
-
----
-
-## 💡 Executive Insights & Operational Action Plan
-1. **Critical SLA Failures:** The current global On-Time Delivery (OTD) rate sits at an underperforming **69.92%**, failing to meet standard corporate distribution benchmarks. 
-2. **Regional Bottlenecks:** While the **East** and **North** regions generate high commercial gross sales yield, they suffer from the longest delivery delays, hurting customer retention.
-3. **Carrier Re-negotiation:** Premium shipping modes require immediate cost-benefit optimization, as high-paying priority clients are facing systemic shipping bottlenecks.
+├── data/          logistics_orders.csv
+├── sql/           01_create_table.sql
+│                  02_data_checks.sql
+│                  03_kpi_queries.sql
+│                  04_business_questions.sql
+├── dashboard/     logistics_dashboard.pbix
+├── docs/          business_questions.docx, sql_queries.docx
+└── screenshots/   dashboard and SQL result images
+```
+Data Notes
+The `Shipping_Mode` column has four values: Standard, Express, Same-Day and Late. "Late" (30,084 orders, 8 to 16 days) is not a real shipping mode. It works like a delivery status, so I measured delays with `actual_delivery_days > 7`.
+No missing values and no duplicate order IDs.
+Orders cover January to December 2025.
+How to Run
+Run `sql/01_create_table.sql` in PostgreSQL (change the CSV path first).
+Run the other SQL files in order.
+Open `dashboard/logistics_dashboard.pbix` in Power BI Desktop.
+Tools
+PostgreSQL (pgAdmin) · Power BI · Excel
