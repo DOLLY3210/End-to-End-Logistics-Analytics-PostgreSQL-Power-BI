@@ -75,3 +75,10 @@ logistics-analytics-postgresql-powerbi/
 ## Tools
 
 PostgreSQL (pgAdmin) · Power BI · Excel
+
+## Contact
+
+**Dolly**\
+Data Analyst\
+Hamburg, Germany\
+[dollykhanna3210@gmail.com](mailto:dollykhanna3210@gmail.com)
