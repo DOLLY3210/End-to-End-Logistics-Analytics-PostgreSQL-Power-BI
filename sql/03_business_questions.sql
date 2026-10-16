@@ -20,12 +20,13 @@ GROUP BY region
 ORDER BY total_shipping_cost DESC;
 
 -- Q8: Which regions have the worst delivery delays?
+
 SELECT
-    region,
-    COUNT(order_id) AS total_orders,
-    ROUND(AVG(actual_delivery_days), 2) AS avg_delivery_days
-    FROM logistics
+region,
+COUNT(order_id) AS total_orders,
+ROUND(AVG(actual_delivery_days), 2) AS avg_delivery_days,
+ROUND(COUNT(*) FILTER (WHERE actual_delivery_days > 7) * 100.0 / COUNT(*), 2) AS late_delivery_pct
+FROM logistics
 GROUP BY region
 ORDER BY late_delivery_pct DESC;
-
 
